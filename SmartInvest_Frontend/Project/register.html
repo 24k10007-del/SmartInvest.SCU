@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartInvest SCU - Terminal Analisis Saham</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div id="loginPage" class="login-container">
+        <div class="login-card">
+            <div class="login-brand">
+                <div class="brand-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h2>SmartInvest<span>.SCU</span></h2>
+            </div>
+            <p class="login-subtitle">
+                Buat akun baru untuk mengakses terminal trader
+            </p>
+            
+            <div id="loginError" class="login-error-msg" style="display: none;">
+                <i class="fa-solid fa-circle-exclamation"></i> Username atau password salah!
+            </div>
+
+            <form id="registerForm">
+
+                <div class="input-group">
+                    <label for="fullname">
+                        <i class="fa-solid fa-user"></i>
+                        Nama Lengkap
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullname"
+                        placeholder="Masukkan nama lengkap"
+                        required>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">
+                        <i class="fa-solid fa-envelope"></i>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Masukkan email"
+                        required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">
+                        <i class="fa-solid fa-lock"></i>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Masukkan password"
+                        required>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmPassword">
+                        <i class="fa-solid fa-lock"></i>
+                        Ulangi Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Ulangi password"
+                        required>
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn-gradient btn-login">
+
+                    Register
+
+                </button>
+
+                <div class="register-link">
+
+                    Sudah punya akun?
+
+                    <a href="dashboard.html">
+
+                        Login di sini
+
+                    </a>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>

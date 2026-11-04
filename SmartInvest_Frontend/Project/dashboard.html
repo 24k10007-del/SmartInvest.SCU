@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartInvest SCU - Terminal Analisis Saham</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div id="loginPage" class="login-container">
+        <div class="login-card">
+            <div class="login-brand">
+                <div class="brand-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h2>SmartInvest<span>.SCU</span></h2>
+            </div>
+            <p class="login-subtitle">Silakan masuk ke terminal akun trader Anda</p>
+            
+            <div id="loginError" class="login-error-msg" style="display: none;">
+                <i class="fa-solid fa-circle-exclamation"></i> Username atau password salah!
+            </div>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email"><i class="fa-solid fa-envelope"></i> Email </label>
+                    <input type="text" id="email" placeholder="Masukkan email" required autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password" required>
+                </div>
+                <button type="submit" class="btn-gradient btn-login">Login</button>
+                <div class="register-link">
+                    Belum punya akun?
+                    <a href="register.html">Register di sini</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="appDashboard" class="app-container" style="display: none;">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h2>SmartInvest<span>.SCU</span></h2>
+            </div>
+            <nav class="nav-links">
+                <a href="#" id="navTerminal" class="nav-item active"><i class="fa-solid fa-chart-pie"></i> Terminal</a>
+                <a href="#" id="navRiwayat" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat</a>
+                <a href="#" id="navWatchlist" class="nav-item"><i class="fa-solid fa-layer-group"></i> Watchlist</a>
+                <a href="#" id="navPengaturan" class="nav-item"><i class="fa-solid fa-sliders"></i> Pengaturan</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="btnLogout" class="btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="glass-header">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Cari kode saham..." value="TLKM.JK" readonly>
+                    <span class="badge-idx">IDX</span>
+                </div>
+                <div class="profile-area">
+                    <div class="notification-badge"><i class="fa-solid fa-bell"></i><span class="dot"></span></div>
+                    <div class="user-info">
+                        <p class="user-role">Premium Member</p>
+                        <h4 id="userName">Fintech Group 5</h4>
+                    </div>
+                    <div class="avatar">G5</div>
+                </div>
+            </header>
+
+            <div id="contentTerminal" class="dashboard-grid">
+                
+                <div class="glass-card stock-hero">
+                    <div class="hero-header">
+                        <div>
+                            <span class="market-badge"><i class="fa-solid fa-circle"></i> Live Market</span>
+                            <h1 id="stockName">PT Telkom Indonesia (Persero) Tbk</h1>
+                            <p id="stockTicker" class="ticker">TLKM.JK</p>
+                        </div>
+                        <div class="price-block">
+                            <h2 id="stockPrice">Rp 2.720</h2>
+                            <span id="stockChange" class="badge-price percent-up">+1.12%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card order-book-box">
+                    <h3><i class="fa-solid fa-bars-staggered"></i> Order Book / Market Depth</h3>
+                    <div class="order-book-container">
+                        <div class="order-side bid-side">
+                            <h4>BID</h4>
+                            <table class="ob-table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">Vol (Lot)</th>
+                                        <th class="text-right">Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bidTableBody"></tbody>
+                            </table>
+                        </div>
+                        <div class="order-side offer-side">
+                            <h4>OFFER</h4>
+                            <table class="ob-table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">Harga</th>
+                                        <th class="text-right">Vol (Lot)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="offerTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="trade-log-section" style="margin-top: 1.5rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+                        <h4 style="font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-pure); display: flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-clock"></i> Aktivitas Transaksi Terakhir (Live)
+                        </h4>
+                        <table class="ob-table" style="opacity: 0.95;">
+                            <thead>
+                                <tr>
+                                    <th class="text-left" style="color: var(--text-secondary);">Waktu</th>
+                                    <th class="text-center" style="color: var(--text-secondary); text-align: center;">Harga</th>
+                                    <th class="text-right" style="color: var(--text-secondary);">Vol (Lot)</th>
+                                    <th class="text-right" style="color: var(--text-secondary); padding-right: 5px;">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tradeLogTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="glass-card chart-box">
+                    <div class="chart-header">
+                        <h3><i class="fa-solid fa-chart-line"></i> Grafik Kinerja Tren Harga</h3>
+                        <div class="timeframes">
+                            <span class="tf-btn active">Live Sesi</span>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="stockChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card analytics-box">
+                    <h3><i class="fa-solid fa-brain-circuit"></i> AI Trade Signal & Sentiment</h3>
+                    
+                    <div class="ai-sentiment-wrapper">
+                        <div class="ai-gauge-score">
+                            <h2 id="aiScore">82%</h2>
+                            <p id="aiLabel" class="status-bullish">STRONG BUY</p>
+                        </div>
+                        <div class="ai-analysis-text">
+                            <h4><i class="fa-solid fa-circle-check status-bullish"></i> Sentimen Pasar Bullish</h4>
+                            <p id="aiReason">Volume antrean beli (Bid) mendominasi pasar sebesar 58.4%. Posisi pergerakan harga menembus indikator rata-rata dinamis.</p>
+                        </div>
+                    </div>
+
+                    <button id="btnExportPdf" class="btn-gradient"><i class="fa-solid fa-download"></i> Unduh Laporan Analisis (.PDF)</button>
+                </div>
+
+            </div>
+
+            <div id="contentRiwayat" class="glass-card page-content">
+                <h3><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Aktivitas</h3>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">Belum ada riwayat aktivitas analisis terbaru.</p>
+            </div>
+            <div id="contentWatchlist" class="glass-card page-content">
+                <h3><i class="fa-solid fa-layer-group"></i> Daftar Watchlist</h3>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">Belum ada emiten di daftar pantau.</p>
+            </div>
+            <div id="contentPengaturan" class="glass-card page-content">
+                <h3><i class="fa-solid fa-sliders"></i> Pengaturan Aplikasi</h3>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">Konfigurasi API Endpoint & Interval Sinkronisasi Terminal.</p>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
